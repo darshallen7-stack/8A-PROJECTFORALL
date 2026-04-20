@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentation Showcase | 8A Project</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="header">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          8A Presentations Showcase
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <h1 class="title">Showcase of 8 Class Presentations</h1>
+          <p class="subtitle">
+            A clean, modern display for your PowerPoint projects. Browse each presentation, preview the topic, and open the file directly from this page.
+          </p>
+        </div>
+
+        <div class="controls">
+          <div class="search-box">
+            <input id="searchInput" type="search" placeholder="Search presentations..." aria-label="Search presentations" />
+          </div>
+          <span class="highlight"><span></span>All presentations are ready to open</span>
+        </div>
+
+        <div class="hero-note">
+          <strong>Tip:</strong> click any card button to download or preview the PPTX file from the presentations folder.
+        </div>
+      </section>
+
+      <section class="grid" id="presentationGrid">
+        <!-- Presentation cards will be inserted here -->
+      </section>
+    </main>
+
+    <script>
+      const presentations = [
+        {
+          title: 'Indian Art by Shreyaa & Anshita',
+          description: 'A vibrant presentation celebrating Indian art forms, styles, and visual culture.',
+          file: 'presentations/INDIAN ART BY SHREYAA AND ANSHITA.pptx',
+          type: 'Art & Culture'
+        },
+        {
+          title: 'Indian Street Food',
+          description: 'A delicious tour of iconic Indian street food, flavours, and regional specialties.',
+          file: 'presentations/INDIAN STREET FOOD Sharad And Vedant.pptx',
+          type: 'Food & Travel'
+        },
+        {
+          title: 'Indian Culture Presentation',
+          description: 'An overview of Indian culture, traditions, and everyday life through engaging slides.',
+          file: 'presentations/Indian_Culture_Presentation Adheesh(G.O.A.T.pptx',
+          type: 'Culture'
+        },
+        {
+          title: 'Natural Beauty & Wildlife',
+          description: 'Discover India’s natural landscapes, wildlife habitats, and conservation stories.',
+          file: 'presentations/Natural Beauty and wildlife (by Aditi and Nivedita).pptx',
+          type: 'Nature'
+        },
+        {
+          title: 'Science and Technology',
+          description: 'A presentation exploring modern science, innovation, and technological progress.',
+          file: 'presentations/Science-and-Technology Avani & Aarya.pptx',
+          type: 'STEM'
+        },
+        {
+          title: 'The Natural Beauty of India',
+          description: 'A visual journey through India’s remarkable landscapes and scenic treasures.',
+          file: 'presentations/The-Natural-Beauty-of-India (by Shriya & Vedangi).pptx',
+          type: 'Travel'
+        },
+        {
+          title: 'English Presentation by Varad & Aditya',
+          description: 'A strong English presentation built for storytelling, language, and classroom impact.',
+          file: 'presentations/Varad Aand Aditya Engish PPT.pptx',
+          type: 'English'
+        },
+        {
+          title: 'Incy 2 by Eshaan & Samit',
+          description: 'A student presentation covering topics and ideas designed to engage the audience.',
+          file: 'presentations/incy 2 Eshaan And Samit.pptx',
+          type: 'Project'
+        }
+      ];
+
+      const grid = document.getElementById('presentationGrid');
+      const searchInput = document.getElementById('searchInput');
+
+      function renderCards(list) {
+        if (!list.length) {
+          grid.innerHTML = `
+            <div class="card" style="grid-column: 1/-1; text-align:center; background: rgba(255,255,255,0.04);">
+              <h2 class="card-title">No matching presentations found</h2>
+              <p class="card-copy">Try a different keyword, or clear the search field to see all available files.</p>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = list.map((item) => {
+          const encodedPath = encodeURI(item.file);
+          return `
+            <article class="card">
+              <div class="card-meta">
+                <span>${item.type}</span>
+                <span>PowerPoint</span>
+              </div>
+              <h2 class="card-title">${item.title}</h2>
+              <p class="card-copy">${item.description}</p>
+              <div class="card-actions">
+                <a class="button primary" href="${encodedPath}" target="_blank" rel="noopener noreferrer">
+                  Open Presentation
+                </a>
+                <span class="tag">${item.file.split('/').pop()}</span>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      function filterPresentations() {
+        const query = searchInput.value.trim().toLowerCase();
+        const filtered = presentations.filter((item) => {
+          return item.title.toLowerCase().includes(query) ||
+                 item.description.toLowerCase().includes(query) ||
+                 item.type.toLowerCase().includes(query);
+        });
+        renderCards(filtered);
+      }
+
+      searchInput.addEventListener('input', filterPresentations);
+      renderCards(presentations);
+    </script>
+  </body>
+</html>
