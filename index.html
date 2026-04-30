@@ -125,13 +125,23 @@
 
     /* thumbnail */
     .card-thumb {
-      height: 148px; display: flex; align-items: center; justify-content: center;
-      font-size: 3.2rem; position: relative; overflow: hidden;
+      height: 168px;
+      position: relative;
+      overflow: hidden;
       flex-shrink: 0;
+      background: #0d1832;
     }
-    .card-thumb::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, rgba(18,29,60,0.7));
+    .card-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+    .card:hover .card-thumb img { transform: scale(1.04); }
+    .card-thumb-fallback {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
     }
 
     .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
@@ -213,32 +223,25 @@
     .modal-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
     .modal-header p { color: var(--muted); font-size: 0.95rem; }
 
-    /* slide carousel */
-    .slide-carousel {
-      position: relative;
-      background: rgba(0,0,0,0.3); border-radius: 18px; overflow: hidden;
-      aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+    /* slide preview image */
+    .slide-preview {
+      border-radius: 18px; overflow: hidden;
+      background: rgba(0,0,0,0.3);
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
       margin-bottom: 20px;
     }
-    .slide-placeholder {
+    .slide-preview img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .slide-preview-fallback {
       display: flex; flex-direction: column; align-items: center; gap: 12px;
-      color: var(--muted);
+      color: var(--muted); padding: 20px; text-align: center;
     }
-    .slide-placeholder span { font-size: 3.5rem; }
-    .slide-placeholder p { font-size: 0.9rem; text-align: center; max-width: 320px; }
-
-    .carousel-nav {
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      margin-bottom: 22px;
-    }
-    .nav-btn {
-      width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.06); color: var(--text);
-      font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-    }
-    .nav-btn:hover { background: rgba(255,255,255,0.12); }
-    .slide-count { font-size: 0.9rem; color: var(--muted); }
+    .slide-preview-fallback span { font-size: 3.5rem; }
+    .slide-preview-fallback p { font-size: 0.9rem; max-width: 320px; }
 
     .modal-footer { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -276,7 +279,7 @@
   <section class="hero">
     <div>
       <h1>Class 8A Projects</h1>
-      <p class="subtitle">Browse all 8 PowerPoint presentations. Filter by category, search by keyword, or open any file directly.</p>
+      <p class="subtitle">Browse all 9 PowerPoint presentations. Filter by category, search by keyword, or open any file directly.</p>
     </div>
 
     <div class="controls">
@@ -306,11 +309,11 @@
       <button class="chip" data-filter="Diverse Nature">Diverse Nature</button>
     </div>
 
-    <p class="result-count" id="resultCount">Showing all 8 presentations</p>
+    <p class="result-count" id="resultCount">Showing all 9 presentations</p>
 
     <div class="tip-bar">
       <strong style="color:var(--text)">Tip:</strong>
-      Click <em>Preview</em> to browse slides, or <em>Open File</em> to download the PPTX.
+      Click <em>Preview</em> to see the slide thumbnail, or <em>Open File</em> to download the PPTX.
     </div>
   </section>
 
@@ -327,12 +330,7 @@
       <p id="modalDesc"></p>
     </div>
 
-    <div class="slide-carousel">
-      <div class="slide-placeholder">
-        <span id="modalEmoji"></span>
-        <p>Slide preview is not available for PPTX files directly in the browser.<br>Click <strong>Open File</strong> below to view this presentation in PowerPoint or Google Slides.</p>
-      </div>
-    </div>
+    <div class="slide-preview" id="modalSlidePreview"></div>
 
     <div class="modal-footer" id="modalFooter"></div>
   </div>
@@ -345,6 +343,7 @@
       students: "Shreyaa & Anshita",
       description: "A vibrant deep-dive into Indian art forms, painting styles, folk traditions, and visual culture across centuries.",
       file: "presentations/INDIAN ART BY SHREYAA AND ANSHITA.pptx",
+      preview: "images/INDIAN ART BY SHREYA AND ANSHITA preview.png",
       type: "Art & Culture",
       emoji: "🎨",
       color: "#4f1fd6",
@@ -355,6 +354,7 @@
       students: "Sharad & Vedant",
       description: "A delicious tour of iconic Indian street food, flavours, regional specialties, and the culture behind every dish.",
       file: "presentations/INDIAN STREET FOOD Sharad And Vedant.pptx",
+      preview: "images/INDIAN STREET FOOD Sharad And Vedant 1 preview.png",
       type: "Food & Travel",
       emoji: "🍢",
       color: "#c2410c",
@@ -365,6 +365,7 @@
       students: "Adheesh and Vivan",
       description: "An overview of Indian culture, traditions, festivals, and everyday life through engaging, well-researched slides.",
       file: "presentations/Indian_Culture_Presentation Adheesh(G.O.A.T.pptx",
+      preview: "images/Indian_Culture_Presentation Adheesh(G.O.A.T preview.png",
       type: "Culture",
       emoji: "🪔",
       color: "#b45309",
@@ -375,6 +376,7 @@
       students: "Aditi & Nivedita",
       description: "Discover India's natural landscapes, wildlife habitats, biodiversity, and conservation stories through stunning slides.",
       file: "presentations/Natural Beauty and wildlife (by Aditi and Nivedita).pptx",
+      preview: "images/Natural Beauty and wildlife (by Aditi and Nivedita) 1 preview.png",
       type: "Nature",
       emoji: "🌿",
       color: "#15803d",
@@ -385,6 +387,7 @@
       students: "Avani & Aarya",
       description: "A presentation exploring modern science, emerging innovation, tech breakthroughs, and India's role in global progress.",
       file: "presentations/Science-and-Technology Avani & Aarya.pptx",
+      preview: "images/Science-and-Technology Avani & Aarya preview.png",
       type: "Science and Technology",
       emoji: "🔬",
       color: "#0e7490",
@@ -395,6 +398,7 @@
       students: "Shriya & Vedangi",
       description: "A visual journey through India's remarkable landscapes, scenic mountains, rivers, and natural wonders.",
       file: "presentations/The-Natural-Beauty-of-India (by Shriya & Vedangi).pptx",
+      preview: "images/The-Natural-Beauty-of-India (by Shriya & Vedangi) 1 preview.png",
       type: "Travel",
       emoji: "🏔️",
       color: "#1d4ed8",
@@ -403,8 +407,9 @@
     {
       title: "Cultural Litreacy of India",
       students: "Varad & Aditya",
-      description: "A project focusing on Indias Cultural Litreacy.",
+      description: "A project focusing on India's Cultural Litreacy.",
       file: "presentations/Varad Aand Aditya Engish PPT.pptx",
+      preview: "images/Varad Aand Aditya Engish PPT 1 preview.png",
       type: "Cultural Litreacy",
       emoji: "📖",
       color: "#9d174d",
@@ -415,8 +420,9 @@
       students: "Eshaan & Samit",
       description: "A project covering the various foods and dishes of India.",
       file: "presentations/incy 2 Eshaan And Samit.pptx",
+      preview: "images/Incy 2 preview.png",
       type: "Indian Foods",
-      emoji: "💡",
+      emoji: "🍛",
       color: "#6b21a8",
       badge: { bg: "rgba(168,85,247,0.16)", color: "#d8b4fe" }
     },
@@ -425,6 +431,7 @@
       students: "Shlok and Narendra",
       description: "A project covering the diverse cultural aspects of India.",
       file: "presentations/The Diverse Nature of India.pptx",
+      preview: "images/The Diverse Nature of India preview.png",
       type: "Diverse Nature",
       emoji: "🌍",
       color: "#6b21a9",
@@ -440,7 +447,7 @@
   const modalClose = document.getElementById("modalClose");
   const modalTitle = document.getElementById("modalTitle");
   const modalDesc = document.getElementById("modalDesc");
-  const modalEmoji = document.getElementById("modalEmoji");
+  const modalSlidePreview = document.getElementById("modalSlidePreview");
   const modalFooter = document.getElementById("modalFooter");
 
   let activeFilter = "All";
@@ -448,13 +455,22 @@
   function openModal(item) {
     modalTitle.textContent = `${item.title} — ${item.students}`;
     modalDesc.textContent = item.description;
-    modalEmoji.textContent = item.emoji;
+
+    // Show image preview in modal
+    modalSlidePreview.innerHTML = `
+      <img
+        src="${encodeURI(item.preview)}"
+        alt="Preview of ${item.title}"
+        onerror="this.parentElement.innerHTML='<div class=\\'slide-preview-fallback\\'><span>${item.emoji}</span><p>Preview image not found. Click Open File to view this presentation.</p></div>'"
+      />
+    `;
+
     const encodedPath = encodeURI(item.file);
     modalFooter.innerHTML = `
       <a class="btn btn-primary" href="${encodedPath}" target="_blank" rel="noopener noreferrer">
         Open File (PPTX)
       </a>
-      <button class="btn btn-ghost" onclick="document.getElementById('modalOverlay').classList.remove('open')">
+      <button class="btn btn-ghost" onclick="document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow='';">
         Close
       </button>
     `;
@@ -489,11 +505,15 @@
 
     grid.innerHTML = list.map((item, i) => {
       const encodedPath = encodeURI(item.file);
-      const filename = item.file.split("/").pop();
+      const encodedPreview = encodeURI(item.preview);
       return `
         <article class="card" role="listitem" tabindex="0" aria-label="${item.title} by ${item.students}">
           <div class="card-thumb" style="background: linear-gradient(135deg, ${item.color}55, ${item.color}22);">
-            <span style="font-size:3rem;z-index:1;position:relative">${item.emoji}</span>
+            <img
+              src="${encodedPreview}"
+              alt="Preview of ${item.title}"
+              onerror="this.outerHTML='<div class=\\'card-thumb-fallback\\'>${item.emoji}</div>'"
+            />
           </div>
           <div class="card-body">
             <div class="card-meta">
