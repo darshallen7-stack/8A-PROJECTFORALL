@@ -337,6 +337,13 @@
 </div>
 
 <script>
+  // encodeURI doesn't encode ( ) & which can break some servers — use this instead
+  function encodePath(path) {
+    return path.split('/').map(segment =>
+      encodeURIComponent(segment).replace(/%2F/g, '/')
+    ).join('/');
+  }
+
   const presentations = [
     {
       title: "Indian Art",
@@ -459,13 +466,13 @@
     // Show image preview in modal
     modalSlidePreview.innerHTML = `
       <img
-        src="${encodeURI(item.preview)}"
+        src="${encodePath(item.preview)}"
         alt="Preview of ${item.title}"
         onerror="this.parentElement.innerHTML='<div class=\\'slide-preview-fallback\\'><span>${item.emoji}</span><p>Preview image not found. Click Open File to view this presentation.</p></div>'"
       />
     `;
 
-    const encodedPath = encodeURI(item.file);
+    const encodedPath = encodePath(item.file);
     modalFooter.innerHTML = `
       <a class="btn btn-primary" href="${encodedPath}" target="_blank" rel="noopener noreferrer">
         Open File (PPTX)
@@ -504,8 +511,8 @@
       : `Showing ${count} of ${presentations.length} presentations`;
 
     grid.innerHTML = list.map((item, i) => {
-      const encodedPath = encodeURI(item.file);
-      const encodedPreview = encodeURI(item.preview);
+      const encodedPath = encodePath(item.file);
+      const encodedPreview = encodePath(item.preview);
       return `
         <article class="card" role="listitem" tabindex="0" aria-label="${item.title} by ${item.students}">
           <div class="card-thumb" style="background: linear-gradient(135deg, ${item.color}55, ${item.color}22);">
