@@ -41,7 +41,7 @@
 
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; }
-    button { font-family: inherit; cursor: pointer; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
     /* ── LAYOUT ── */
     .shell {
@@ -92,6 +92,7 @@
     .hero {
       padding: 56px 0 36px;
       display: grid; gap: 12px;
+      animation: fadeInUp 0.6s ease-out;
     }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
@@ -118,6 +119,7 @@
       display: flex; align-items: center; gap: 10px;
       background: var(--surface2); border: 1px solid var(--border);
       border-radius: var(--radius-sm); padding: 10px 16px;
+      animation: fadeInUp 0.6s ease-out;
     }
     .stat-icon { font-size: 1.2rem; line-height: 1; }
     .stat-label { font-size: 0.78rem; color: var(--muted); }
@@ -207,6 +209,46 @@
     }
     .view-btn.active { background: rgba(124,92,255,0.16); border-color: rgba(124,92,255,0.5); color: #ccc8ff; }
 
+    /* ── RECENTLY VIEWED ── */
+    .recent-section {
+      padding: 24px 22px; margin-top: 6px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 18px; display: none;
+      animation: slideDown 0.3s ease-out;
+    }
+    .recent-section.visible { display: block; }
+    .recent-section h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; color: var(--muted); }
+    .recent-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .recent-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 13px; border-radius: 999px;
+      background: rgba(124,92,255,0.12); border: 1px solid rgba(124,92,255,0.25);
+      color: #d8c4ff; font-size: 0.82rem; cursor: pointer;
+      transition: all 0.16s;
+    }
+    .recent-chip:hover { background: rgba(124,92,255,0.2); }
+
+    /* ── FAVORITES SECTION ── */
+    .fav-section {
+      padding: 24px 22px; margin-top: 6px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 18px; display: none;
+      animation: slideDown 0.3s ease-out;
+    }
+    .fav-section.visible { display: block; }
+    .fav-section h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; color: var(--muted); }
+    .fav-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .fav-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 13px; border-radius: 999px;
+      background: rgba(255,60,120,0.12); border: 1px solid rgba(255,60,120,0.25);
+      color: #fcb; font-size: 0.82rem; cursor: pointer;
+      transition: all 0.16s;
+    }
+    .fav-chip:hover { background: rgba(255,60,120,0.2); }
+    .fav-chip .remove-btn { opacity: 0.6; font-size: 0.75rem; }
+    .fav-chip .remove-btn:hover { opacity: 1; }
+
     /* ── GRID ── */
     .grid {
       display: grid;
@@ -237,6 +279,8 @@
       transition: transform 0.26s cubic-bezier(0.34,1.56,0.64,1), border-color 0.22s, box-shadow 0.22s;
       -webkit-tap-highlight-color: transparent;
       position: relative;
+      animation: fadeInUp 0.5s ease-out;
+      cursor: pointer;
     }
     .card:hover, .card:focus-within {
       transform: translateY(-5px);
@@ -312,6 +356,7 @@
     .empty {
       grid-column: 1/-1; text-align: center; padding: 70px 20px;
       color: var(--muted);
+      animation: fadeInUp 0.5s ease-out;
     }
     .empty-icon { font-size: 3rem; margin-bottom: 16px; }
     .empty h2 { font-size: 1.3rem; color: var(--text); margin-bottom: 8px; }
@@ -326,7 +371,7 @@
       padding: 0;
       overscroll-behavior: contain;
     }
-    .modal-overlay.open { display: flex; }
+    .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease-out; }
 
     .modal {
       background: #0b1529;
@@ -346,6 +391,18 @@
     }
     @keyframes sheetUp {
       from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -416,24 +473,6 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
 
-    /* ── FAVORITES SECTION ── */
-    .fav-section {
-      padding: 24px 22px; margin-top: 6px;
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 18px; display: none;
-    }
-    .fav-section.visible { display: block; }
-    .fav-section h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; color: var(--muted); }
-    .fav-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .fav-chip {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 7px 13px; border-radius: 999px;
-      background: rgba(255,60,120,0.12); border: 1px solid rgba(255,60,120,0.25);
-      color: #fcb; font-size: 0.82rem; cursor: pointer;
-      transition: all 0.16s;
-    }
-    .fav-chip:hover { background: rgba(255,60,120,0.2); }
-
     /* ── FOOTER ── */
     footer {
       text-align: center; padding: 36px 20px 20px;
@@ -503,6 +542,12 @@
       </div>
     </div>
   </section>
+
+  <!-- Recently Viewed section -->
+  <div class="recent-section" id="recentSection">
+    <h3>⏱️ Recently viewed</h3>
+    <div class="recent-chips" id="recentChips"></div>
+  </div>
 
   <!-- Favorites section -->
   <div class="fav-section" id="favSection">
@@ -594,299 +639,277 @@
 </div>
 
 <script>
-const presentations = [
-  {
-    title: "Indian Art",
-    students: "Shreyaa & Anshita",
-    description: "A vibrant deep-dive into Indian art forms, painting styles, folk traditions, and visual culture across centuries.",
-    file: "presentations/INDIAN ART BY SHREYAA AND ANSHITA.pptx",
-    preview: "images/INDIAN ART BY SHREYA AND ANSHITA preview.png",
-    type: "Art & Culture",
-    emoji: "🎨",
-    color: "#4f1fd6",
-    badge: { bg: "rgba(124,92,255,0.18)", color: "#c4b5fd" }
-  },
-  {
-    title: "Indian Street Food",
-    students: "Sharad & Vedant",
-    description: "A delicious tour of iconic Indian street food, flavours, regional specialties, and the culture behind every dish.",
-    file: "presentations/INDIAN STREET FOOD Sharad And Vedant.pptx",
-    preview: "images/INDIAN STREET FOOD Sharad And Vedant 1 preview.png",
-    type: "Food & Travel",
-    emoji: "🍢",
-    color: "#c2410c",
-    badge: { bg: "rgba(220,100,30,0.18)", color: "#fdba74" }
-  },
-  {
-    title: "Indian Culture",
-    students: "Adheesh & Vivan",
-    description: "An overview of Indian culture, traditions, festivals, and everyday life through engaging, well-researched slides.",
-    file: "presentations/Indian_Culture_Presentation Adheesh(G.O.A.T.pptx",
-    preview: "images/Indian_Culture_Presentation Adheesh(G.O.A.T preview.png",
-    type: "Culture",
-    emoji: "🪔",
-    color: "#b45309",
-    badge: { bg: "rgba(245,158,11,0.16)", color: "#fcd34d" }
-  },
-  {
-    title: "Natural Beauty & Wildlife",
-    students: "Aditi & Nivedita",
-    description: "Discover India's natural landscapes, wildlife habitats, biodiversity, and conservation stories through stunning slides.",
-    file: "presentations/Natural Beauty and wildlife (by Aditi and Nivedita).pptx",
-    preview: "images/Natural Beauty and wildlife (by Aditi and Nivedita) 1 preview.png",
-    type: "Nature",
-    emoji: "🌿",
-    color: "#15803d",
-    badge: { bg: "rgba(34,197,94,0.14)", color: "#86efac" }
-  },
-  {
-    title: "Science & Technology",
-    students: "Avani & Aarya",
-    description: "A presentation exploring modern science, emerging innovation, tech breakthroughs, and India's role in global progress.",
-    file: "presentations/Science-and-Technology Avani & Aarya.pptx",
-    preview: "images/Science-and-Technology Avani & Aarya preview.png",
-    type: "Science and Technology",
-    emoji: "🔬",
-    color: "#0e7490",
-    badge: { bg: "rgba(6,182,212,0.14)", color: "#67e8f9" }
-  },
-  {
-    title: "Natural Beauty of India",
-    students: "Shriya & Vedangi",
-    description: "A visual journey through India's remarkable landscapes, scenic mountains, rivers, and natural wonders.",
-    file: "presentations/The-Natural-Beauty-of-India (by Shriya & Vedangi).pptx",
-    preview: "images/The-Natural-Beauty-of-India (by Shriya & Vedangi) 1 preview.png",
-    type: "Travel",
-    emoji: "🏔️",
-    color: "#1d4ed8",
-    badge: { bg: "rgba(59,130,246,0.16)", color: "#93c5fd" }
-  },
-  {
-    title: "Cultural Literacy of India",
-    students: "Varad & Aditya",
-    description: "A project focusing on India's rich cultural literacy, language traditions, and intellectual heritage.",
-    file: "presentations/Varad Aand Aditya Engish PPT.pptx",
-    preview: "images/Varad Aand Aditya Engish PPT 1 preview.png",
-    type: "Cultural Litreacy",
-    emoji: "📖",
-    color: "#9d174d",
-    badge: { bg: "rgba(236,72,153,0.14)", color: "#f9a8d4" }
-  },
-  {
-    title: "Indian Food Culture",
-    students: "Eshaan & Samit",
-    description: "A project covering the various foods and dishes of India — from street snacks to festive feasts.",
-    file: "presentations/incy 2 Eshaan And Samit.pptx",
-    preview: "images/Incy 2 preview.png",
-    type: "Indian Foods",
-    emoji: "🍛",
-    color: "#6b21a8",
-    badge: { bg: "rgba(168,85,247,0.16)", color: "#d8b4fe" }
-  },
-  {
-    title: "Diverse Culture of India",
-    students: "Shlok & Narendra",
-    description: "A project covering the diverse cultural aspects of India — regional languages, customs, and celebrations.",
-    file: "presentations/The Diverse Nature of India.pptx",
-    preview: "images/The Diverse Nature of India preview.png",
-    type: "Diverse Nature",
-    emoji: "🌍",
-    color: "#166534",
-    badge: { bg: "rgba(22,163,74,0.14)", color: "#86efac" }
+  // ────────────────────────────────────────────────────────────
+  // DATA
+  // ────────────────────────────────────────────────────────────
+
+  const presentations = [
+    {
+      title: "Indian Art",
+      students: "Shreyaa & Anshita",
+      description: "A vibrant deep-dive into Indian art forms, painting styles, folk traditions, and visual culture across centuries.",
+      file: "presentations/INDIAN ART BY SHREYAA AND ANSHITA.pptx",
+      preview: "images/INDIAN ART BY SHREYA AND ANSHITA preview.png",
+      type: "Art & Culture",
+      emoji: "🎨",
+      color: "#4f1fd6",
+      badge: { bg: "rgba(124,92,255,0.18)", color: "#c4b5fd" }
+    },
+    {
+      title: "Indian Street Food",
+      students: "Sharad & Vedant",
+      description: "A delicious tour of iconic Indian street food, flavours, regional specialties, and the culture behind every dish.",
+      file: "presentations/INDIAN STREET FOOD Sharad And Vedant.pptx",
+      preview: "images/INDIAN STREET FOOD Sharad And Vedant 1 preview.png",
+      type: "Food & Travel",
+      emoji: "🍢",
+      color: "#c2410c",
+      badge: { bg: "rgba(220,100,30,0.18)", color: "#fdba74" }
+    },
+    {
+      title: "Indian Culture",
+      students: "Adheesh & Vivan",
+      description: "An overview of Indian culture, traditions, festivals, and everyday life through engaging, well-researched slides.",
+      file: "presentations/Indian_Culture_Presentation Adheesh(G.O.A.T.pptx",
+      preview: "images/Indian_Culture_Presentation Adheesh(G.O.A.T preview.png",
+      type: "Culture",
+      emoji: "🪔",
+      color: "#b45309",
+      badge: { bg: "rgba(245,158,11,0.16)", color: "#fcd34d" }
+    },
+    {
+      title: "Natural Beauty & Wildlife",
+      students: "Aditi & Nivedita",
+      description: "Discover India's natural landscapes, wildlife habitats, biodiversity, and conservation stories through stunning slides.",
+      file: "presentations/Natural Beauty and wildlife (by Aditi and Nivedita).pptx",
+      preview: "images/Natural Beauty and wildlife (by Aditi and Nivedita) 1 preview.png",
+      type: "Nature",
+      emoji: "🌿",
+      color: "#15803d",
+      badge: { bg: "rgba(34,197,94,0.14)", color: "#86efac" }
+    },
+    {
+      title: "Science & Technology",
+      students: "Avani & Aarya",
+      description: "A presentation exploring modern science, emerging innovation, tech breakthroughs, and India's role in global progress.",
+      file: "presentations/Science-and-Technology Avani & Aarya.pptx",
+      preview: "images/Science-and-Technology Avani & Aarya preview.png",
+      type: "Science and Technology",
+      emoji: "🔬",
+      color: "#0e7490",
+      badge: { bg: "rgba(6,182,212,0.14)", color: "#67e8f9" }
+    },
+    {
+      title: "Natural Beauty of India",
+      students: "Shriya & Vedangi",
+      description: "A visual journey through India's remarkable landscapes, scenic mountains, rivers, and natural wonders.",
+      file: "presentations/The-Natural-Beauty-of-India (by Shriya & Vedangi).pptx",
+      preview: "images/The-Natural-Beauty-of-India (by Shriya & Vedangi) 1 preview.png",
+      type: "Travel",
+      emoji: "🏔️",
+      color: "#1d4ed8",
+      badge: { bg: "rgba(59,130,246,0.16)", color: "#93c5fd" }
+    },
+    {
+      title: "Cultural Literacy of India",
+      students: "Varad & Aditya",
+      description: "A project focusing on India's rich cultural literacy, language traditions, and intellectual heritage.",
+      file: "presentations/Varad Aand Aditya Engish PPT.pptx",
+      preview: "images/Varad Aand Aditya Engish PPT 1 preview.png",
+      type: "Cultural Litreacy",
+      emoji: "📖",
+      color: "#9d174d",
+      badge: { bg: "rgba(236,72,153,0.14)", color: "#f9a8d4" }
+    },
+    {
+      title: "Indian Food Culture",
+      students: "Eshaan & Samit",
+      description: "A project covering the various foods and dishes of India — from street snacks to festive feasts.",
+      file: "presentations/incy 2 Eshaan And Samit.pptx",
+      preview: "images/Incy 2 preview.png",
+      type: "Indian Foods",
+      emoji: "🍛",
+      color: "#6b21a8",
+      badge: { bg: "rgba(168,85,247,0.16)", color: "#d8b4fe" }
+    },
+    {
+      title: "Diverse Culture of India",
+      students: "Shlok & Narendra",
+      description: "A project covering the diverse cultural aspects of India — regional languages, customs, and celebrations.",
+      file: "presentations/The Diverse Nature of India.pptx",
+      preview: "images/The Diverse Nature of India preview.png",
+      type: "Diverse Nature",
+      emoji: "🌍",
+      color: "#166534",
+      badge: { bg: "rgba(22,163,74,0.14)", color: "#86efac" }
+    }
+  ];
+
+  // ────────────────────────────────────────────────────────────
+  // DOM ELEMENTS
+  // ────────────────────────────────────────────────────────────
+
+  const grid = document.getElementById("grid");
+  const searchInput = document.getElementById("searchInput");
+  const resultCount = document.getElementById("resultCount");
+  const chips = document.querySelectorAll(".chip");
+  const sortSelect = document.getElementById("sortSelect");
+  const gridViewBtn = document.getElementById("gridViewBtn");
+  const listViewBtn = document.getElementById("listViewBtn");
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalClose = document.getElementById("modalClose");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalBadge = document.getElementById("modalBadge");
+  const modalSlidePreview = document.getElementById("modalSlidePreview");
+  const modalInfoGrid = document.getElementById("modalInfoGrid");
+  const modalFooter = document.getElementById("modalFooter");
+  const favSection = document.getElementById("favSection");
+  const favChips = document.getElementById("favChips");
+  const recentSection = document.getElementById("recentSection");
+  const recentChips = document.getElementById("recentChips");
+  const toast = document.getElementById("toast");
+  const toastMsg = document.getElementById("toastMsg");
+
+  // ────────────────────────────────────────────────────────────
+  // STATE
+  // ────────────────────────────────────────────────────────────
+
+  let activeFilter = "All";
+  let isListView = false;
+  let favorites = JSON.parse(localStorage.getItem("8a_favs") || "[]");
+  let recentlyViewed = JSON.parse(localStorage.getItem("8a_recent") || "[]");
+  let toastTimer;
+  let currentModalItem = null;
+
+  // ────────────────────────────────────────────────────────────
+  // UTILITY FUNCTIONS
+  // ────────────────────────────────────────────────────────────
+
+  function encodePath(p) {
+    return p.split('/').map(s => encodeURIComponent(s).replace(/%2F/g,'/')).join('/');
   }
-];
 
-function encodePath(p) {
-  return p.split('/').map(s => encodeURIComponent(s).replace(/%2F/g,'/')).join('/');
-}
-
-const grid = document.getElementById("grid");
-const searchInput = document.getElementById("searchInput");
-const resultCount = document.getElementById("resultCount");
-const chips = document.querySelectorAll(".chip");
-const sortSelect = document.getElementById("sortSelect");
-const gridViewBtn = document.getElementById("gridViewBtn");
-const listViewBtn = document.getElementById("listViewBtn");
-const modalOverlay = document.getElementById("modalOverlay");
-const modalClose = document.getElementById("modalClose");
-const modalTitle = document.getElementById("modalTitle");
-const modalDesc = document.getElementById("modalDesc");
-const modalBadge = document.getElementById("modalBadge");
-const modalSlidePreview = document.getElementById("modalSlidePreview");
-const modalInfoGrid = document.getElementById("modalInfoGrid");
-const modalFooter = document.getElementById("modalFooter");
-const favSection = document.getElementById("favSection");
-const favChips = document.getElementById("favChips");
-const toast = document.getElementById("toast");
-const toastMsg = document.getElementById("toastMsg");
-
-let activeFilter = "All";
-let isListView = false;
-let favorites = JSON.parse(localStorage.getItem("8a_favs") || "[]");
-let toastTimer;
-
-function showToast(msg) {
-  toastMsg.textContent = msg;
-  toast.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
-}
-
-function saveFavs() {
-  localStorage.setItem("8a_favs", JSON.stringify(favorites));
-  renderFavSection();
-}
-
-function toggleFav(title, e) {
-  e && e.stopPropagation();
-  if (favorites.includes(title)) {
-    favorites = favorites.filter(t => t !== title);
-    showToast("Removed from saved");
-  } else {
-    favorites.push(title);
-    showToast("❤️ Saved!");
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
   }
-  saveFavs();
-  applyFilters();
-}
 
-function renderFavSection() {
-  if (!favorites.length) { favSection.classList.remove("visible"); return; }
-  favSection.classList.add("visible");
-  favChips.innerHTML = favorites.map(t => {
-    const p = presentations.find(x => x.title === t);
-    return p ? `<div class="fav-chip" onclick="openModal(presentations.find(x=>x.title===decodeURIComponent('${encodeURIComponent(t)}')))">
-      ${p.emoji} ${p.title} <span style="opacity:0.6;font-size:0.75rem">× remove</span>
-    </div>` : '';
-  }).join('');
-  favChips.querySelectorAll('.fav-chip').forEach((chip, i) => {
-    const title = favorites[i];
-    chip.querySelector('span').addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleFav(title);
+  function getPresentationByTitle(title) {
+    return presentations.find(p => p.title === title);
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // FAVORITES MANAGEMENT
+  // ────────────────────────────────────────────────────────────
+
+  function saveFavs() {
+    localStorage.setItem("8a_favs", JSON.stringify(favorites));
+    renderFavSection();
+  }
+
+  function toggleFav(title) {
+    if (favorites.includes(title)) {
+      favorites = favorites.filter(t => t !== title);
+      showToast("Removed from saved");
+    } else {
+      favorites.push(title);
+      showToast("❤️ Saved!");
+    }
+    saveFavs();
+    updateCardFavButtons(title);
+    updateModalFavButton();
+  }
+
+  function renderFavSection() {
+    if (!favorites.length) {
+      favSection.classList.remove("visible");
+      return;
+    }
+
+    favSection.classList.add("visible");
+    favChips.innerHTML = favorites.map(title => {
+      const p = getPresentationByTitle(title);
+      return p ? `
+        <div class="fav-chip" data-title="${title}">
+          ${p.emoji} ${p.title}
+          <span class="remove-btn">×</span>
+        </div>
+      ` : '';
+    }).join('');
+
+    favChips.querySelectorAll('.fav-chip').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-btn')) {
+          e.stopPropagation();
+          const title = chip.dataset.title;
+          toggleFav(title);
+        } else {
+          const title = chip.dataset.title;
+          const item = getPresentationByTitle(title);
+          if (item) openModal(item);
+        }
+      });
     });
-  });
-}
-
-function openModal(item) {
-  modalTitle.textContent = item.title;
-  modalBadge.innerHTML = `<span class="type-badge" style="background:${item.badge.bg};color:${item.badge.color}">${item.type}</span>`;
-  modalDesc.textContent = `by ${item.students} · ${item.description}`;
-
-  modalSlidePreview.innerHTML = `<img src="${encodePath(item.preview)}" alt="Preview of ${item.title}"
-    onerror="this.parentElement.innerHTML='<div class=\\'preview-fallback\\'><span>${item.emoji}</span><p>Preview not available. Click Open File to view.</p></div>'" />`;
-
-  modalInfoGrid.innerHTML = `
-    <div class="modal-info-item">
-      <div class="modal-info-label">Students</div>
-      <div class="modal-info-value">${item.students}</div>
-    </div>
-    <div class="modal-info-item">
-      <div class="modal-info-label">Category</div>
-      <div class="modal-info-value">${item.type}</div>
-    </div>
-    <div class="modal-info-item">
-      <div class="modal-info-label">Format</div>
-      <div class="modal-info-value">PowerPoint (.pptx)</div>
-    </div>
-    <div class="modal-info-item">
-      <div class="modal-info-label">Saved</div>
-      <div class="modal-info-value">${favorites.includes(item.title) ? "❤️ Yes" : "Not yet"}</div>
-    </div>
-  `;
-
-  const isFav = favorites.includes(item.title);
-  modalFooter.innerHTML = `
-    <a class="btn btn-primary" href="${encodePath(item.file)}" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8m-3-3 3 3 3-3"/><rect x="2" y="11" width="12" height="3" rx="1"/></svg>
-      Open File
-    </a>
-    <button class="btn btn-ghost" id="modalFavBtn" onclick="toggleFav('${item.title.replace(/'/g,"&#39;")}'); document.getElementById('modalOverlay').dispatchEvent(new Event('favupdated'))">
-      ${isFav ? "❤️ Saved" : "♡ Save"}
-    </button>
-    <button class="btn btn-ghost btn-sm" onclick="copyLink('${encodePath(item.file)}')">
-      🔗 Copy link
-    </button>
-  `;
-
-  modalOverlay.classList.add("open");
-  document.body.style.overflow = "hidden";
-}
-
-function copyLink(file) {
-  const url = location.origin + location.pathname.replace(/\/[^/]*$/, '/') + file;
-  navigator.clipboard.writeText(url).then(() => showToast("🔗 Link copied!")).catch(() => showToast("Could not copy"));
-}
-
-function closeModal() {
-  modalOverlay.classList.remove("open");
-  document.body.style.overflow = "";
-}
-
-modalOverlay.addEventListener('favupdated', () => {
-  const title = modalTitle.textContent;
-  const isFav = favorites.includes(title);
-  const btn = document.getElementById('modalFavBtn');
-  if (btn) btn.textContent = isFav ? "❤️ Saved" : "♡ Save";
-});
-
-modalClose.addEventListener("click", closeModal);
-modalOverlay.addEventListener("click", e => { if (e.target === modalOverlay) closeModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
-
-// Touch-to-close bottom sheet
-let startY = 0;
-document.getElementById('modalBox').addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, {passive:true});
-document.getElementById('modalBox').addEventListener('touchend', e => {
-  const delta = e.changedTouches[0].clientY - startY;
-  if (delta > 80) closeModal();
-}, {passive:true});
-
-gridViewBtn.addEventListener("click", () => {
-  isListView = false;
-  grid.classList.remove("list-view");
-  gridViewBtn.classList.add("active"); listViewBtn.classList.remove("active");
-});
-listViewBtn.addEventListener("click", () => {
-  isListView = true;
-  grid.classList.add("list-view");
-  listViewBtn.classList.add("active"); gridViewBtn.classList.remove("active");
-});
-
-function getSorted(list) {
-  const v = sortSelect.value;
-  if (v === "az") return [...list].sort((a,b) => a.title.localeCompare(b.title));
-  if (v === "za") return [...list].sort((a,b) => b.title.localeCompare(a.title));
-  if (v === "category") return [...list].sort((a,b) => a.type.localeCompare(b.type));
-  return list;
-}
-
-function renderCards(list) {
-  const sorted = getSorted(list);
-  if (!sorted.length) {
-    grid.innerHTML = `<div class="empty">
-      <div class="empty-icon">🔍</div>
-      <h2>No matching presentations</h2>
-      <p>Try a different search term or reset the filter.</p>
-      <button class="btn btn-ghost" onclick="document.getElementById('searchInput').value=''; applyFilters()">Clear search</button>
-    </div>`;
-    resultCount.textContent = "No results found";
-    return;
   }
 
-  const count = sorted.length;
-  resultCount.textContent = count === presentations.length
-    ? `Showing all ${count} presentations`
-    : `Showing ${count} of ${presentations.length} presentations`;
+  // ────────────────────────────────────────────────────────────
+  // RECENTLY VIEWED MANAGEMENT
+  // ────────────────────────────────────────────────────────────
 
-  grid.innerHTML = sorted.map(item => {
+  function addToRecentlyViewed(title) {
+    recentlyViewed = recentlyViewed.filter(t => t !== title);
+    recentlyViewed.unshift(title);
+    if (recentlyViewed.length > 6) recentlyViewed = recentlyViewed.slice(0, 6);
+    localStorage.setItem("8a_recent", JSON.stringify(recentlyViewed));
+    renderRecentSection();
+  }
+
+  function renderRecentSection() {
+    if (!recentlyViewed.length) {
+      recentSection.classList.remove("visible");
+      return;
+    }
+
+    recentSection.classList.add("visible");
+    recentChips.innerHTML = recentlyViewed.map(title => {
+      const p = getPresentationByTitle(title);
+      return p ? `
+        <div class="recent-chip" data-title="${title}">
+          ${p.emoji} ${p.title}
+        </div>
+      ` : '';
+    }).join('');
+
+    recentChips.querySelectorAll('.recent-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const title = chip.dataset.title;
+        const item = getPresentationByTitle(title);
+        if (item) openModal(item);
+      });
+    });
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // CARD RENDERING
+  // ────────────────────────────────────────────────────────────
+
+  function createCardElement(item) {
     const isFav = favorites.includes(item.title);
-    return `
-    <article class="card" role="listitem" tabindex="0" aria-label="${item.title} by ${item.students}">
+    const article = document.createElement('article');
+    article.className = 'card';
+    article.setAttribute('role', 'listitem');
+    article.setAttribute('tabindex', '0');
+    article.setAttribute('aria-label', `${item.title} by ${item.students}`);
+    article.dataset.title = item.title;
+
+    article.innerHTML = `
       <div class="card-thumb" style="background:linear-gradient(135deg,${item.color}55,${item.color}1a)">
         <img src="${encodePath(item.preview)}" alt="Preview of ${item.title}"
           onerror="this.outerHTML='<div class=\\'thumb-fallback\\'>${item.emoji}</div>'" loading="lazy" />
-        <button class="card-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.title.replace(/'/g,"&#39;")}',event)" aria-label="${isFav ? 'Unsave' : 'Save'} ${item.title}">
+        <button class="card-fav ${isFav ? 'active' : ''}" aria-label="${isFav ? 'Unsave' : 'Save'} ${item.title}">
           ${isFav ? '❤️' : '🤍'}
         </button>
       </div>
@@ -899,7 +922,7 @@ function renderCards(list) {
         <p class="card-students">by ${item.students}</p>
         <p class="card-copy">${item.description}</p>
         <div class="card-actions">
-          <button class="btn btn-ghost btn-sm" onclick='openModal(${JSON.stringify(item).replace(/'/g,"&#39;")})'>
+          <button class="btn btn-ghost btn-sm preview-btn">
             👁 Preview
           </button>
           <a class="btn btn-primary btn-sm" href="${encodePath(item.file)}" target="_blank" rel="noopener noreferrer">
@@ -908,39 +931,288 @@ function renderCards(list) {
           </a>
         </div>
       </div>
-    </article>`;
-  }).join("");
+    `;
 
-  grid.querySelectorAll(".card").forEach((card, i) => {
-    card.addEventListener("keydown", e => { if (e.key === "Enter") openModal(sorted[i]); });
+    // Event listeners
+    const favBtn = article.querySelector('.card-fav');
+    const previewBtn = article.querySelector('.preview-btn');
+
+    favBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleFav(item.title);
+    });
+
+    previewBtn.addEventListener('click', () => {
+      openModal(item);
+    });
+
+    article.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') openModal(item);
+    });
+
+    return article;
+  }
+
+  function updateCardFavButtons(title) {
+    const cards = grid.querySelectorAll(`[data-title="${title}"]`);
+    const isFav = favorites.includes(title);
+    cards.forEach(card => {
+      const favBtn = card.querySelector('.card-fav');
+      if (favBtn) {
+        favBtn.classList.toggle('active', isFav);
+        favBtn.textContent = isFav ? '❤️' : '🤍';
+        favBtn.setAttribute('aria-label', `${isFav ? 'Unsave' : 'Save'} ${title}`);
+      }
+    });
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // MODAL FUNCTIONS
+  // ────────────────────────────────────────────────────────────
+
+  function buildModalBadge(item) {
+    const div = document.createElement('div');
+    div.className = 'type-badge';
+    div.style.background = item.badge.bg;
+    div.style.color = item.badge.color;
+    div.textContent = item.type;
+    return div;
+  }
+
+  function buildModalInfoGrid(item) {
+    const container = document.createElement('div');
+    container.className = 'modal-info-grid';
+
+    const infoItems = [
+      { label: 'Students', value: item.students },
+      { label: 'Category', value: item.type },
+      { label: 'Format', value: 'PowerPoint (.pptx)' },
+      { label: 'Saved', value: favorites.includes(item.title) ? '❤️ Yes' : 'Not yet' }
+    ];
+
+    infoItems.forEach(({ label, value }) => {
+      const div = document.createElement('div');
+      div.className = 'modal-info-item';
+      div.innerHTML = `
+        <div class="modal-info-label">${label}</div>
+        <div class="modal-info-value">${value}</div>
+      `;
+      container.appendChild(div);
+    });
+
+    return container;
+  }
+
+  function buildModalFooter(item) {
+    const container = document.createElement('div');
+    container.className = 'modal-footer';
+
+    const openBtn = document.createElement('a');
+    openBtn.className = 'btn btn-primary';
+    openBtn.href = encodePath(item.file);
+    openBtn.target = '_blank';
+    openBtn.rel = 'noopener noreferrer';
+    openBtn.innerHTML = `
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8m-3-3 3 3 3-3"/><rect x="2" y="11" width="12" height="3" rx="1"/></svg>
+      Open File
+    `;
+
+    const isFav = favorites.includes(item.title);
+    const favBtn = document.createElement('button');
+    favBtn.className = 'btn btn-ghost';
+    favBtn.id = 'modalFavBtn';
+    favBtn.textContent = isFav ? '❤️ Saved' : '♡ Save';
+    favBtn.addEventListener('click', () => {
+      toggleFav(item.title);
+    });
+
+    const linkBtn = document.createElement('button');
+    linkBtn.className = 'btn btn-ghost btn-sm';
+    linkBtn.textContent = '🔗 Copy link';
+    linkBtn.addEventListener('click', () => {
+      copyLink(encodePath(item.file));
+    });
+
+    container.appendChild(openBtn);
+    container.appendChild(favBtn);
+    container.appendChild(linkBtn);
+
+    return container;
+  }
+
+  function openModal(item) {
+    currentModalItem = item;
+    addToRecentlyViewed(item.title);
+
+    modalTitle.textContent = item.title;
+    modalBadge.innerHTML = '';
+    modalBadge.appendChild(buildModalBadge(item));
+    modalDesc.textContent = `by ${item.students} · ${item.description}`;
+
+    modalSlidePreview.innerHTML = `
+      <img src="${encodePath(item.preview)}" alt="Preview of ${item.title}"
+        onerror="this.parentElement.innerHTML='<div class=\\'preview-fallback\\'><span>${item.emoji}</span><p>Preview not available. Click Open File to view.</p></div>'" />
+    `;
+
+    modalInfoGrid.innerHTML = '';
+    modalInfoGrid.appendChild(buildModalInfoGrid(item));
+
+    modalFooter.innerHTML = '';
+    modalFooter.appendChild(buildModalFooter(item));
+
+    modalOverlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function updateModalFavButton() {
+    if (!currentModalItem) return;
+    const favBtn = document.getElementById('modalFavBtn');
+    if (favBtn) {
+      const isFav = favorites.includes(currentModalItem.title);
+      favBtn.textContent = isFav ? '❤️ Saved' : '♡ Save';
+    }
+  }
+
+  function copyLink(file) {
+    const url = location.origin + location.pathname.replace(/\/[^/]*$/, '/') + file;
+    navigator.clipboard.writeText(url)
+      .then(() => showToast("🔗 Link copied!"))
+      .catch(() => showToast("Could not copy"));
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove("open");
+    document.body.style.overflow = "";
+    currentModalItem = null;
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // FILTERING & SORTING
+  // ────────────────────────────────────────────────────────────
+
+  function getSorted(list) {
+    const v = sortSelect.value;
+    if (v === "az") return [...list].sort((a, b) => a.title.localeCompare(b.title));
+    if (v === "za") return [...list].sort((a, b) => b.title.localeCompare(a.title));
+    if (v === "category") return [...list].sort((a, b) => a.type.localeCompare(b.type));
+    return list;
+  }
+
+  function renderCards(list) {
+    const sorted = getSorted(list);
+
+    if (!sorted.length) {
+      grid.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🔍</div>
+          <h2>No matching presentations</h2>
+          <p>Try a different search term or reset the filter.</p>
+          <button class="btn btn-ghost clear-btn">Clear search</button>
+        </div>
+      `;
+      grid.querySelector('.clear-btn').addEventListener('click', () => {
+        searchInput.value = '';
+        applyFilters();
+      });
+      resultCount.textContent = "No results found";
+      return;
+    }
+
+    const count = sorted.length;
+    resultCount.textContent = count === presentations.length
+      ? `Showing all ${count} presentations`
+      : `Showing ${count} of ${presentations.length} presentations`;
+
+    grid.innerHTML = '';
+    sorted.forEach(item => {
+      grid.appendChild(createCardElement(item));
+    });
+  }
+
+  function applyFilters() {
+    const q = searchInput.value.trim().toLowerCase();
+    let filtered = presentations;
+
+    if (activeFilter !== "All") {
+      filtered = filtered.filter(p => p.type === activeFilter);
+    }
+
+    if (q) {
+      filtered = filtered.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.students.toLowerCase().includes(q) ||
+        p.type.toLowerCase().includes(q)
+      );
+    }
+
+    renderCards(filtered);
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // EVENT LISTENERS
+  // ────────────────────────────────────────────────────────────
+
+  // Filter chips
+  chips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      activeFilter = chip.dataset.filter;
+      applyFilters();
+    });
   });
-}
 
-function applyFilters() {
-  const q = searchInput.value.trim().toLowerCase();
-  let filtered = presentations;
-  if (activeFilter !== "All") filtered = filtered.filter(p => p.type === activeFilter);
-  if (q) filtered = filtered.filter(p =>
-    p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q) ||
-    p.students.toLowerCase().includes(q) || p.type.toLowerCase().includes(q)
-  );
-  renderCards(filtered);
-}
+  // Search
+  searchInput.addEventListener("input", applyFilters);
 
-chips.forEach(chip => {
-  chip.addEventListener("click", () => {
-    chips.forEach(c => c.classList.remove("active"));
-    chip.classList.add("active");
-    activeFilter = chip.dataset.filter;
-    applyFilters();
+  // Sort
+  sortSelect.addEventListener("change", applyFilters);
+
+  // View toggle
+  gridViewBtn.addEventListener("click", () => {
+    isListView = false;
+    grid.classList.remove("list-view");
+    gridViewBtn.classList.add("active");
+    listViewBtn.classList.remove("active");
   });
-});
 
-searchInput.addEventListener("input", applyFilters);
-sortSelect.addEventListener("change", applyFilters);
+  listViewBtn.addEventListener("click", () => {
+    isListView = true;
+    grid.classList.add("list-view");
+    listViewBtn.classList.add("active");
+    gridViewBtn.classList.remove("active");
+  });
 
-renderFavSection();
-renderCards(presentations);
+  // Modal controls
+  modalClose.addEventListener("click", closeModal);
+
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
+  });
+
+  // Touch-to-close bottom sheet
+  let startY = 0;
+  document.getElementById('modalBox').addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.getElementById('modalBox').addEventListener('touchend', (e) => {
+    const delta = e.changedTouches[0].clientY - startY;
+    if (delta > 80) closeModal();
+  }, { passive: true });
+
+  // ────────────────────────────────────────────────────────────
+  // INITIALIZATION
+  // ────────────────────────────────────────────────────────────
+
+  renderFavSection();
+  renderRecentSection();
+  renderCards(presentations);
 </script>
 </body>
 </html>
