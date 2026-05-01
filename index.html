@@ -255,19 +255,57 @@
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 20px; margin-top: 20px;
     }
+
+    /* ── LIST VIEW ── */
     .grid.list-view {
       grid-template-columns: 1fr;
     }
     .grid.list-view .card {
-      flex-direction: row; max-height: 130px;
+      flex-direction: row;
+      min-height: 110px;
+      max-height: none; /* remove height cap so content isn't clipped */
     }
     .grid.list-view .card-thumb {
-      width: 160px; height: 130px; flex-shrink: 0; border-radius: var(--radius) 0 0 var(--radius);
+      width: 140px;
+      min-width: 140px;
+      height: auto;
+      min-height: 110px;
+      flex-shrink: 0;
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+    .grid.list-view .card-thumb img {
+      height: 100%;
+      object-fit: cover;
     }
     .grid.list-view .card-body {
       padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      min-width: 0; /* prevent overflow */
     }
-    .grid.list-view .card-copy { display: none; }
+    .grid.list-view .card-copy {
+      display: none; /* hide description in list view to keep rows compact */
+    }
+    .grid.list-view .card-actions {
+      flex-wrap: nowrap; /* keep buttons on one line */
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .grid.list-view .card-meta {
+      margin-bottom: 6px;
+    }
+    .grid.list-view .card-title {
+      font-size: 1rem;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .grid.list-view .card-students {
+      margin-bottom: 0;
+    }
 
     /* ── CARD ── */
     .card {
@@ -286,6 +324,11 @@
       transform: translateY(-5px);
       border-color: rgba(124,92,255,0.35);
       box-shadow: 0 18px 48px rgba(0,0,0,0.38), 0 0 0 1px rgba(124,92,255,0.12);
+    }
+    /* No lift in list view — horizontal cards don't lift well */
+    .grid.list-view .card:hover,
+    .grid.list-view .card:focus-within {
+      transform: translateX(4px);
     }
 
     .card-thumb {
@@ -485,11 +528,23 @@
       h1 { font-size: 2rem; }
       .hero { padding: 32px 0 24px; }
       .grid { grid-template-columns: 1fr; gap: 14px; }
+      .grid.list-view .card-thumb {
+        width: 100px;
+        min-width: 100px;
+      }
     }
     @media (max-width: 380px) {
       .shell { width: calc(100% - 20px); }
       .card-actions { gap: 6px; }
       .btn { padding: 9px 13px; font-size: 0.8rem; }
+      .grid.list-view .card-thumb {
+        width: 80px;
+        min-width: 80px;
+      }
+      .grid.list-view .btn-sm {
+        padding: 7px 10px;
+        font-size: 0.75rem;
+      }
     }
     @media (min-width: 900px) {
       .grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
@@ -502,7 +557,7 @@
   <div class="nav-inner">
     <div class="brand">
       <span class="brand-dot"></span>
-      8A Showcase
+      9A Showcase
     </div>
     <div class="nav-stat">
       <span class="live-dot"></span>
@@ -514,9 +569,9 @@
 <div class="shell">
 
   <section class="hero">
-    <div class="hero-eyebrow">📚 Class 8A · English Projects</div>
+    <div class="hero-eyebrow">📚 Class 9A · English Projects</div>
     <h1>Student Presentations</h1>
-    <p class="subtitle">Browse, preview, and download all 9 PowerPoint presentations from Class 8A.</p>
+    <p class="subtitle">Browse, preview, and download all 9 PowerPoint presentations from Class 9A.</p>
 
     <div class="stats-row">
       <div class="stat-card">
@@ -610,7 +665,7 @@
   <section class="grid" id="grid" role="list" aria-label="Presentation cards"></section>
 
   <footer>
-    Made with ♥ for Class 8A · All presentations are student work
+    Made with ♥ for Class 9A · All presentations are student work
   </footer>
 
 </div>
