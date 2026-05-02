@@ -262,14 +262,13 @@
     }
     .grid.list-view .card {
       flex-direction: row;
-      min-height: 110px;
-      max-height: none; /* remove height cap so content isn't clipped */
+      min-height: auto;
+      max-height: none;
     }
     .grid.list-view .card-thumb {
       width: 140px;
       min-width: 140px;
-      height: auto;
-      min-height: 110px;
+      height: 110px;
       flex-shrink: 0;
       border-radius: var(--radius) 0 0 var(--radius);
     }
@@ -278,32 +277,40 @@
       object-fit: cover;
     }
     .grid.list-view .card-body {
-      padding: 14px 18px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       flex: 1;
-      min-width: 0; /* prevent overflow */
+      min-width: 0;
     }
     .grid.list-view .card-copy {
-      display: none; /* hide description in list view to keep rows compact */
+      display: none;
     }
     .grid.list-view .card-actions {
-      flex-wrap: nowrap; /* keep buttons on one line */
-      gap: 8px;
-      margin-top: 10px;
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      width: 100%;
+    }
+    .grid.list-view .card-actions .btn {
+      flex: 1;
+      min-width: 0;
+      padding: 8px 10px;
+      font-size: 0.75rem;
     }
     .grid.list-view .card-meta {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .grid.list-view .card-title {
-      font-size: 1rem;
-      margin-bottom: 2px;
+      font-size: 0.95rem;
+      margin-bottom: 1px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     .grid.list-view .card-students {
+      font-size: 0.7rem;
       margin-bottom: 0;
     }
 
@@ -325,7 +332,7 @@
       border-color: rgba(124,92,255,0.35);
       box-shadow: 0 18px 48px rgba(0,0,0,0.38), 0 0 0 1px rgba(124,92,255,0.12);
     }
-    /* No lift in list view — horizontal cards don't lift well */
+    /* No lift in list view */
     .grid.list-view .card:hover,
     .grid.list-view .card:focus-within {
       transform: translateX(4px);
@@ -541,9 +548,13 @@
         width: 80px;
         min-width: 80px;
       }
-      .grid.list-view .btn-sm {
-        padding: 7px 10px;
-        font-size: 0.75rem;
+      .grid.list-view .card-actions .btn {
+        padding: 7px 8px;
+        font-size: 0.7rem;
+      }
+      .grid.list-view .card-actions .btn svg {
+        width: 10px;
+        height: 10px;
       }
     }
     @media (min-width: 900px) {
